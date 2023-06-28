@@ -64,7 +64,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
      resource_group_name   = azurerm_resource_group.Kubernetes.name
      size                  = "Standard_D2ds_v4"
      network_interface_ids = [
-     azurerm_network_interface.test["${2}"].id
+     azurerm_network_interface.kubeadm["${2}"].id
      ]
 
    source_image_reference {
