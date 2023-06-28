@@ -59,10 +59,20 @@ resource "azurerm_network_security_group" "allowedports" {
 
 
 resource "azurerm_network_interface" "kubeadm" {
-   name = "kubeadm-interface"
+   count = 3
+   name = "kubeadm-interface-${count.index}"
    location = azurerm_resource_group.kubeadm.location
    resource_group_name = azurerm_resource_group.kubeadm.name
 }
+
+  ip_configuration {
+     name                          = "Internal"
+     subnet_id                     = azurerm_subnet.kubeadm-subnet.id
+     private_ip_address_allocation = "Dynamic"
+     public_ip_address_id          = azurerm_public_ip.kubeadm["${count.index}"].id
+   }
+   depends_on = [azurerm_resource_group.Kubernetes]
+ }
 
 resource "azurerm_virtual_network" "kubeadm-net" {
   name                = "vnet"
