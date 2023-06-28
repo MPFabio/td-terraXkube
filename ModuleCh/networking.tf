@@ -63,12 +63,7 @@ resource "azurerm_network_interface" "kubeadm" {
    location = azurerm_resource_group.kubeadm.location
    resource_group_name = azurerm_resource_group.kubeadm.name
 
-   ip_configuration {
-       name = "internal"
-       private_ip_address_allocation = "Dynamic"
-       subnet_id = azurerm_subnet.kubeadm-subnet.id
-       public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
-   }
+
 
 resource "azurerm_virtual_network" "kubeadm-net" {
   name                = "vnet"
