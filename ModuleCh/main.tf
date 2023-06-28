@@ -31,7 +31,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.kubeadm.location
    network_interface_ids = [
-    azurerm_network_interface.kubeadm.["${count.index}"].id
+    azurerm_network_interface.kubeadm["${count.index}"].id
    ]
 
    source_image_reference {
