@@ -32,7 +32,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    location = azurerm_resource_group.kubeadm.location
    custom_data = base64encode(file("../kubeadm/init-script.sh"))
    network_interface_ids = [
-       azurerm_network_interface.kubeadm.["${count.index}"].id,
+       azurerm_network_interface.kubeadm.["${count.index}"].id
    ]
 
    source_image_reference {
