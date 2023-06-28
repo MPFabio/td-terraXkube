@@ -63,7 +63,7 @@ resource "azurerm_network_interface" "kubeadm" {
    location = azurerm_resource_group.kubeadm.location
    resource_group_name = azurerm_resource_group.kubeadm.name
 
-
+}
 
 resource "azurerm_virtual_network" "kubeadm-net" {
   name                = "vnet"
