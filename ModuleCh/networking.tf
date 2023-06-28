@@ -80,13 +80,14 @@ resource "azurerm_subnet" "kubeadm-subnet" {
   private_link_service_network_policies_enabled = false
 }
 
-ip_configuration {
-       count = 3
-       name = Public_IP-${count.index}"
-       private_ip_address_allocation = "Dynamic"
-       subnet_id = azurerm_subnet.kubeadm-subnet.id
-       public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
+
+resource "azurerm_public_ip" "kubeadm_public_ip" {
+   count = 3
+   name = "kubeadm_public_ip${count.index}"
+   location = var.location
+   resource_group_name = azurerm_resource_group.kubeadm.name
+   allocation_method = "Dynamic"
+
+   depends_on = [azurerm_resource_group.kubeadm]
 }
 
-depends_on = [azurerm_resource_group.kubeadm]
-   }
