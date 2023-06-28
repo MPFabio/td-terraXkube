@@ -86,6 +86,7 @@ ip_configuration {
        private_ip_address_allocation = "Dynamic"
        subnet_id = azurerm_subnet.kubeadm-subnet.id
        public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
+}
 
 depends_on = [azurerm_resource_group.kubeadm]
    }
