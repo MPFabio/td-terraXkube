@@ -62,7 +62,6 @@ resource "azurerm_network_interface" "kubeadm" {
    name = "kubeadm-interface"
    location = azurerm_resource_group.kubeadm.location
    resource_group_name = azurerm_resource_group.kubeadm.name
-
 }
 
 resource "azurerm_virtual_network" "kubeadm-net" {
@@ -81,5 +80,3 @@ resource "azurerm_subnet" "kubeadm-subnet" {
   private_link_service_network_policies_enabled = false
 }
 
-   depends_on = [azurerm_resource_group.kubeadm]
-}
