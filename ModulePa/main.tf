@@ -1,3 +1,3 @@
-module "ModuleP" {
-  source = "../ModuleC"
+module "ModulePa" {
+  source = "../ModuleCh"
 }
