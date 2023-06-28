@@ -10,11 +10,6 @@ resource "azurerm_public_ip" "kubeadm_public_ip" {
    resource_group_name = azurerm_resource_group.kubeadm.name
    allocation_method = "Dynamic"
 
-   tags = {
-       environment = var.environment
-       costcenter = "it"
-   }
-
    depends_on = [azurerm_resource_group.kubeadm]
 }
 
