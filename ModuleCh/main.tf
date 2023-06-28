@@ -58,8 +58,6 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
        #create_option = "FromImage"
        storage_account_type = "Standard_LRS"
    }
-
-   depends_on = [azurerm_resource_group.kubeadm]
 }
 
    resource "azurerm_linux_virtual_machine" "Manager" {
