@@ -57,7 +57,15 @@ resource "azurerm_network_security_group" "allowedports" {
    }
 }
 
+resource "azurerm_public_ip" "kubeadm_public_ip" {
+   count = 3
+   name = "kubeadm_public_ip${count.index}"
+   location = var.location
+   resource_group_name = azurerm_resource_group.kubeadm.name
+   allocation_method = "Dynamic"
 
+   depends_on = [azurerm_resource_group.kubeadm]
+}
 
 resource "azurerm_virtual_network" "kubeadm-net" {
   name                = "vnet"
@@ -88,13 +96,6 @@ resource "azurerm_network_interface" "kubeadm" {
      private_ip_address_allocation = "Dynamic"
      public_ip_address_id          = azurerm_public_ip.kubeadm["${count.index}"].id
    }
-
-resource "azurerm_public_ip" "kubeadm_public_ip" {
-   count = 3
-   name = "kubeadm_public_ip${count.index}"
-   location = var.location
-   resource_group_name = azurerm_resource_group.kubeadm.name
-   allocation_method = "Dynamic"
 
    depends_on = [azurerm_resource_group.kubeadm]
 }
