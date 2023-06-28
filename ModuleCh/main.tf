@@ -30,9 +30,8 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    name = "worker${count.index}"
    resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.kubeadm.location
-   custom_data = base64encode(file("../kubeadm/init-script.sh"))
    network_interface_ids = [
-       azurerm_network_interface.kubeadm.["${count.index}"].id
+    azurerm_network_interface.kubeadm.["${count.index}"].id
    ]
 
    source_image_reference {
@@ -40,7 +39,6 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
       offer     = "0001-com-ubuntu-server-jammy"
       sku       = "22_04-lts-gen2"
       version   = "latest"
-
    }
 
    computer_name = "Worker${count.index}"
