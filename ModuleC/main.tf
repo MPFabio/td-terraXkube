@@ -1,0 +1,3 @@
+module "ModuleP" {
+  source = "../ModuleC"
+}
