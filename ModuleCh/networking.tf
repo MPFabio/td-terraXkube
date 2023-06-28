@@ -4,7 +4,7 @@ resource "azurerm_network_interface_security_group_association" "nsgnic" {
 }
 
 resource "azurerm_network_security_group" "allowedports" {
-   name = "allowedports${count.index}"
+   name = "allowedports"
    resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.kubeadm.location
   
