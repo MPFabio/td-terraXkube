@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "kubeadm" {
 
 
 resource "azurerm_public_ip" "kubeadm_public_ip" {
-   name = "kubeadm_public_ip${var.environment}"
+   name = "kubeadm_public_ip${count.index}"
    location = var.location
    resource_group_name = azurerm_resource_group.kubeadm.name
    allocation_method = "Dynamic"
