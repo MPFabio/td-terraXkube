@@ -67,11 +67,11 @@ resource "azurerm_network_interface" "kubeadm" {
 
   ip_configuration {
      name                          = "Internal"
-     subnet_id                     = azurerm_subnet.kubeadm-subnet.id
+     subnet_id                     = azurerm_subnet.kubeadm.id
      private_ip_address_allocation = "Dynamic"
      public_ip_address_id          = azurerm_public_ip.kubeadm["${count.index}"].id
    }
-   depends_on = [azurerm_resource_group.Kubernetes]
+   depends_on = [azurerm_resource_group.kubeadm]
  }
 
 resource "azurerm_virtual_network" "kubeadm-net" {
