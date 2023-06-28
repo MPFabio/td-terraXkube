@@ -3,65 +3,6 @@ resource "azurerm_resource_group" "kubeadm" {
    location = var.location
 }
 
-resource "azurerm_network_interface_security_group_association" "nsgnic" {
-  network_interface_id      = azurerm_network_interface.kubeadm.id
-  network_security_group_id = azurerm_network_security_group.allowedports.id
-}
-
-resource "azurerm_network_security_group" "allowedports" {
-   name = "allowedports${var.environment}"
-   resource_group_name = azurerm_resource_group.kubeadm.name
-   location = azurerm_resource_group.kubeadm.location
-  
-   security_rule {
-       name = "http"
-       priority = 100
-       direction = "Inbound"
-       access = "Allow"
-       protocol = "Tcp"
-       source_port_range = "*"
-       destination_port_range = "80"
-       source_address_prefix = "*"
-       destination_address_prefix = "*"
-   }
-
-   security_rule {
-       name = "https"
-       priority = 200
-       direction = "Inbound"
-       access = "Allow"
-       protocol = "Tcp"
-       source_port_range = "*"
-       destination_port_range = "443"
-       source_address_prefix = "*"
-       destination_address_prefix = "*"
-   }
-
-    security_rule {
-       name = "custom"
-       priority = 400
-       direction = "Inbound"
-       access = "Allow"
-       protocol = "Tcp"
-       source_port_range = "*"
-       destination_port_range = "8080"
-       source_address_prefix = "*"
-       destination_address_prefix = "*"
-   }
-   
-   security_rule {
-       name = "ssh"
-       priority = 300
-       direction = "Inbound"
-       access = "Allow"
-       protocol = "Tcp"
-       source_port_range = "*"
-       destination_port_range = "22"
-       source_address_prefix = "*"
-       destination_address_prefix = "*"
-   }
-}
-
 
 resource "azurerm_public_ip" "kubeadm_public_ip" {
    name = "kubeadm_public_ip${var.environment}"
@@ -77,20 +18,6 @@ resource "azurerm_public_ip" "kubeadm_public_ip" {
    depends_on = [azurerm_resource_group.kubeadm]
 }
 
-resource "azurerm_network_interface" "kubeadm" {
-   name = "kubeadm-interface"
-   location = azurerm_resource_group.kubeadm.location
-   resource_group_name = azurerm_resource_group.kubeadm.name
-
-   ip_configuration {
-       name = "internal"
-       private_ip_address_allocation = "Dynamic"
-       subnet_id = azurerm_subnet.kubeadm-subnet.id
-       public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
-   }
-
-   depends_on = [azurerm_resource_group.kubeadm]
-}
 
 resource "tls_private_key" "kubeadm" {
     algorithm = "RSA"
@@ -157,7 +84,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
 
    admin_ssh_key {
      username   = "fabio"
-     public_key = tls_private_key.SSH.public_key_openssh
+     public_key = tls_private_key.kubeadm.public_key_openssh
     }
 
     os_disk {
