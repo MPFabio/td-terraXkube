@@ -4,17 +4,6 @@ resource "azurerm_resource_group" "kubeadm" {
 }
 
 
-resource "azurerm_public_ip" "kubeadm_public_ip" {
-   count = 3
-   name = "kubeadm_public_ip${count.index}"
-   location = var.location
-   resource_group_name = azurerm_resource_group.kubeadm.name
-   allocation_method = "Dynamic"
-
-   depends_on = [azurerm_resource_group.kubeadm]
-}
-
-
 resource "tls_private_key" "kubeadm" {
     algorithm = "RSA"
     rsa_bits = 4096
